@@ -1,3 +1,18 @@
+# Robust Audio Watermarking Benchmark (RAW-Bench)
+
+_Accompanying website for the paper:_  
+**A Comprehensive Real-World Assessment of Audio Watermarking Algorithms: Will They Survive Neural Codecs?**  
+_Yigitcan Özer, Woosung Choi, Joan Serrà, Mayank Kumar Singh, Wei-Hsiang Liao, Yuki Mitsufuji_  
+_To appear at Interspeech 2025, Rotterdam, The Netherlands_
+
+---
+
+## Abstract
+
+We introduce the **Robust Audio Watermarking Benchmark (RAW-Bench)**, a benchmark for evaluating deep learning-based audio watermarking methods with standardized and systematic comparisons. To simulate real-world usage, we introduce a comprehensive audio attack pipeline with various distortions such as compression, background noise, and reverberation, along with a diverse test dataset including speech, environmental sounds, and music recordings. Evaluating four existing watermarking methods on RAW-bench reveals two main insights: (i) neural compression techniques pose the most significant challenge, even when algorithms are trained with such compressions; and (ii) training with audio attacks generally improves robustness, although it is insufficient in some cases. Furthermore, we find that specific distortions, such as polarity inversion, time stretching, or reverb, seriously affect certain methods.
+
+---
+
 # ViSQOL Installation Guide
 
 This guide describes how to install [ViSQOL](https://github.com/google/visqol), a perceptual audio quality model, using Conda and pip.
