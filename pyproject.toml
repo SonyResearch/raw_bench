@@ -1,0 +1,43 @@
+[build-system]
+requires = ["flit"]
+build-backend = "flit.buildapi"
+
+[project]
+name = "raw-bench"
+version = "0.0.0"
+description = "Initial version of the project."
+readme = "README.md"
+requires-python = ">=3.8, <3.13.0"
+license = {text = "MIT"}
+authors = [
+    {name = "Yigitcan Özer"},
+    {name = "Woosung Choi"},
+    {name = "Joan Serrà"},
+    {name = "Mayank Kumar Singh"},
+    {name = "Wei-Hsiang Liao"},
+    {name = "Yuki Mitsufuji"}
+]
+classifiers = [
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3",
+    "Intended Audience :: Developers",
+    "Topic :: Multimedia :: Sound/Audio :: Analysis"
+]
+dependencies = [
+]
+
+[project.optional-dependencies]
+develop = [
+]
+test = ["pytest == 6.2.*"]
+doc = [
+    "sphinx == 4.0.*",
+    "sphinx_rtd_theme == 0.5.*"
+]
+
+[project.urls]
+Homepage = "https://github.com/SonyResearch/raw_bench"
+Repository = "https://github.com/SonyResearch/raw_bench"
+Download = "https://github.com/SonyResearch/raw_bench"
+Documentation = "https://sonyresearch.github.io/raw_bench/docs/index.html"
