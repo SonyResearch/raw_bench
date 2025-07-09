@@ -1,0 +1,13 @@
+# @package __global__
+
+defaults:
+  - ../eval.yaml
+  - skeleton.yaml
+
+model_suffix: pretrained
+
+# please make sure if you have downloaded the checkpoint
+checkpoint: wm_ckpts/audioseal
+
+dataset:
+  eval_seg_duration: 3.

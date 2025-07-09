@@ -1,0 +1,34 @@
+model_type: silentcipher
+sample_rate: 16000
+
+stft:
+  n_fft: 2048
+  hop_len: 1024
+  win_len: 2048
+
+message:
+  band_size: 512 # half of the freqs
+  dim: 4
+  len: 16
+  n_messages: 1
+  sdr: 47
+
+model:
+  encoder:
+    n_layers: 3
+    conv_dim: 16
+    num_repeat: 3
+    out_dim: 32
+
+  decoder:
+    c_n_layers: 4
+    c_conv_dim: 96
+    c_num_repeat: 3
+    m_conv_dim: 1
+    m_num_repeat: 8
+
+
+
+
+
+  

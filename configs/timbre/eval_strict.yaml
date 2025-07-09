@@ -1,0 +1,7 @@
+# @package __global__
+defaults:
+  - eval_skeleton.yaml
+  - /dataset: eval_strict.yaml
+  - /attack: attack_strict.yaml
+
+test_suffix: strict

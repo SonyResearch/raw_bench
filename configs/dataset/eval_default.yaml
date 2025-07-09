@@ -1,0 +1,27 @@
+name: null
+
+# for evaluation, we only need test_path. 
+train_path: null
+val_path: null
+
+# see eval_strict.yaml and eval_loose.yaml
+test_path: null
+
+eval_batch_size: 1
+
+
+# dataset
+num_workers: 0
+
+# about audio
+sample_rate: ${sample_rate}
+mono: true
+
+# only for training
+random_start_frame: false
+
+mixing_train_filepath: data/demand_train.csv
+reverb_train_filepath: data/air_train.csv
+
+train: null
+valid: null

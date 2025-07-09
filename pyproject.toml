@@ -1,0 +1,50 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "raw-bench"
+version = "0.1.0"
+description = "A benchmarking suite for robust audio watermarking."
+authors = [
+    { name="Woosung Choi", email="Woosung.Choi@Sony.com" }
+]
+readme = "README.md"
+requires-python = ">=3.8"
+
+dependencies = [
+    "torch==2.1.0",
+    "torchaudio",
+    "torchinfo",
+    "torchinterp1d",
+    "audiomentations",
+    "descript-audio-codec",
+    "encodec",
+    "librosa==0.10.2",
+    "pysoundfile",
+    "grafx==0.6.0",
+    "audioseal",
+    "numpy",
+    "numba",
+    "pandas",
+    "scipy",
+    "einops",
+    "argbind",
+    "qqdm",
+    "hydra-core",
+    "tensorboard",
+    "tensorboardX",
+    "loguru",
+    "wandb",
+    "transformers",
+    "mel_cepstral_distance",
+    "kornia",
+    "torchlpc",
+    # GitHub dependencies (PEP 508)
+    "audiocraft @ git+https://github.com/facebookresearch/audiocraft@main#egg=audiocraft[wm]",
+    "silentcipher @ git+https://github.com/Woosung-sony/silentcipher",
+    "wavmark"
+]
+
+[tool.setuptools.packages.find]
+where = ["."]

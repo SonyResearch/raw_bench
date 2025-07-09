@@ -1,0 +1,1 @@
+This is a refactored version of [the official Timbre implementation](https://github.com/TimbreWatermarking/TimbreWatermarking)

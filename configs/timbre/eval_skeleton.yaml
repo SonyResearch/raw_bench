@@ -1,0 +1,18 @@
+# @package __global__
+
+defaults:
+  - ../eval.yaml
+  - skeleton.yaml
+
+model_suffix: pretrained
+
+# please make sure if you have downloaded the checkpoint
+# see docs/wm_models/timbre.md to download the checkpoint
+checkpoint: wm_ckpts/timbre_ckpt/compressed_none-conv2_ep_20_2023-02-14_02_24_57.pth.tar
+
+# vocoder settings: these are used in the Timbre's Decoder: see conv2_mel_modules.py
+vocoder_checkpoint: wm_ckpts/timbre/watermarking_model/hifigan/model/VCTK_V1/generator_v1
+vocoder_config: wm_ckpts/timbre/watermarking_model/hifigan/config.json
+
+dataset:
+  eval_seg_duration: 6

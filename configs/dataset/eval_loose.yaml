@@ -1,0 +1,5 @@
+defaults:
+  - eval_default.yaml
+
+name: loose_attacks
+test_path: data/test_loose.csv

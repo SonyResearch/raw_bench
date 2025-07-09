@@ -1,0 +1,18 @@
+model_type: wavmark
+
+sample_rate: 16000
+# channels: 1
+
+decode_batch_size: 10
+message:
+  len: 32
+  payload_bits: 16
+
+model:
+  num_layers: 8
+  num_bit: 32
+
+stft:
+  n_fft: 1000
+  hop_len: 400
+  win_len: 1000

@@ -1,0 +1,107 @@
+defaults:
+  - default.yaml
+
+attacks:
+  # Mixing
+  - background_noise: 0.333
+  - gaussian_noise: 0.333
+  - reverb: 0.333
+  # Conventional compression
+  - aac: 0.333
+  - mp3: 0.333
+  - vorbis: 0.333
+  # Neural compression
+  - dac: 0.5
+  - encodec: 0.5
+  # Dynamic
+  - dynamic_range_compression: 0.333
+  - dynamic_range_expansion: 0.333
+  - limiter: 0.333
+  # Filters
+  - eq: 0.333
+  - highpass: 0.333
+  - lowpass: 0.333
+  # Spectrogram augmentations (Only for training)
+  - freq_mask: 0.5
+  - time_mask: 0.5
+  # Low-level augmentations
+  - gain: 0.166
+  - phase_shift: 0.166
+  - polarity: 0.166
+  - quantization: 0.166
+  - time_jitter: 0.166
+  - time_stretch: 0.166
+# Mixing params
+background_noise:
+  min_snr: 35
+  max_snr: 60
+gaussian_noise:
+  std: 0.1
+  min_snr: 40
+  max_snr: 60
+reverb:
+  max_rir_len: 0.50
+  min_snr: 6
+  max_snr: 12
+# Compression params
+aac:
+  - 128k
+  - 256k
+mp3:
+  - 128k
+  - 256k
+vorbis:
+  - 64k
+  - 128k
+  - 256k
+# Neural compression params
+dac:
+  type: 44khz
+  n_codebooks:
+  - 9
+encodec:
+  type: facebook/encodec_24khz
+  n_codebooks:
+  - 32
+# Dynamic params
+dynamic_range_compression:
+  min_threshold: -18
+  max_threshold: -6
+dynamic_range_expansion:
+  min_threshold: -12
+  max_threshold: -6
+limiter:
+  min_threshold: -18
+  max_threshold: -6
+# Filtering params
+eq:
+  scale: bark
+  sr: 44100 # we resample it
+  # sr: ${sample_rate}
+  threshold_intervals:
+  - [-0.375, 0.375]
+highpass:
+  min_cutoff: 10
+  max_cutoff: 250
+lowpass:
+  min_cutoff: 6000
+  max_cutoff: 8000
+# Low-level augmentation params
+gain:
+  rate_intervals:
+  - [0.5, 1.5]
+quantization:
+  min_bits: 12
+  max_bits: 16
+time_jitter: 
+  min_scale: 0.01
+  max_scale: 0.2
+time_stretch:
+  rate_intervals:
+  - [0.95, 1.05]
+# Spectrogram augmentation params
+time_mask:
+  max_ratio: 0.15
+freq_mask:
+  max_ratio: 0.15
+

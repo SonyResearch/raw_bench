@@ -1,0 +1,34 @@
+# @package __global__
+
+mode: test
+
+defaults:
+  - _self_
+  - /datapath: datapath.yaml
+
+# environment settings for evaluation
+device: cuda # only single GPU supported
+
+# Experiment envs
+run_dir: null
+test_suffix: null
+csv_delimiter: '|'
+
+checkpoint: null
+
+eval_batch_size: 1 # we only support batch_size=1 for evaluation
+
+# Library used in Codec Attack
+ffmpeg4codecs: null
+
+# for log
+wandb: false
+project_name: raw_bench
+exp_name:
+
+# for faster evaluation, disable full perceptual evaluation
+full_perceptual: false
+
+allow_missing_dataset: false
+random_seed_for_eval: 42
+

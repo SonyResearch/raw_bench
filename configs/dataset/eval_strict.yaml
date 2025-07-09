@@ -1,0 +1,5 @@
+defaults:
+  - eval_default.yaml
+
+name: strict_attacks
+test_path: data/test_strict.csv

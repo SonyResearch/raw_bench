@@ -1,0 +1,7 @@
+# @package __global__
+defaults:
+  - eval_skeleton.yaml
+  - /dataset: eval_loose.yaml
+  - /attack: attack_loose.yaml
+
+test_suffix: loose

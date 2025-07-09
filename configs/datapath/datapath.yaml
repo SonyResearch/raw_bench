@@ -1,0 +1,16 @@
+AIR: null
+DEMAND: /data_woosung/DEMAND
+Clotho: null
+DAPS: null
+MoisesDB: null
+jaCapella: null
+GuitarSet: null
+MAESTRO: null
+PCD: null
+Bach10: /data_woosung/watermarking_test/Bach10
+Freischuetz: null
+
+# training
+Tency: null
+VCTK: null
+BBC_Sound_Effects: null
