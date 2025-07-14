@@ -7,45 +7,6 @@ import torchaudio
 from typing import Literal, Optional, Tuple
 
 
-def compress(wav: torch.Tensor, 
-             sr: int,
-             target_format: Literal["mp3", "ogg", "flac"] = "mp3",
-             bitrate: str = "128k") -> Tuple[torch.Tensor, int]:
-    """Convert audio wave form to a specified lossy format: mp3, ogg, flac
-
-    Args:
-        wav (torch.Tensor): Input wav tensor.
-        sr (int): Sampling rate.
-        target_format (str): Compression format (e.g., 'mp3').
-        bitrate (str): Bitrate for compression.
-
-    Returns:
-        Tuple of compressed WAV tensor and sampling rate.
-    """
-
-    # Extract the bit rate from string (e.g., '128k')
-    match = re.search(r"\d+(\.\d+)?", str(bitrate))
-    parsed_bitrate = float(match.group()) if match else None
-    assert parsed_bitrate, f"Invalid bitrate specified (got {parsed_bitrate})"
-    try:
-        # Create a virtual file instead of saving to disk
-        buffer = io.BytesIO()
-
-        torchaudio.save(
-            buffer, wav, sr, format=target_format, bits_per_sample=parsed_bitrate,
-        )
-        # Move to the beginning of the file
-        buffer.seek(0)
-        compressed_wav, sr = torchaudio.load(buffer)
-        return compressed_wav, sr
-
-    except RuntimeError:
-        print(
-            f"compression failed skipping compression: {format} {parsed_bitrate}"
-        )
-        return wav, sr
-    
-    
 def get_mp3(wav_tensor: torch.Tensor, 
             sr: int, 
             bitrate: str = "128k",
@@ -88,7 +49,7 @@ def get_mp3(wav_tensor: torch.Tensor,
         input_path, output_path = f_in.name, f_out.name
 
         # Save the tensor as a WAV file
-        torchaudio.save(input_path, wav_tensor_flat, sr, backend="ffmpeg")
+        torchaudio.save(input_path, wav_tensor_flat, sr)
 
         # Prepare FFmpeg command for AAC conversion
         ffmpeg = "ffmpeg" if ffmpeg4codecs is None else ffmpeg4codecs 
@@ -108,18 +69,11 @@ def get_mp3(wav_tensor: torch.Tensor,
             command += ["-cutoff", str(lowpass_freq)]
         command.append(output_path)
 
-        try:
-            # Run FFmpeg and suppress output
-            subprocess.run(command, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+        # Run FFmpeg and suppress output
+        subprocess.run(command, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
 
-            # Load the AAC audio back into a tensor
-            mp3_tensor, _ = torchaudio.load(output_path, backend="ffmpeg")
-        except Exception as exc:
-            raise RuntimeError(
-                f"Failed to run command {' '.join(command)}"
-                "(Often this means ffmpeg is not installed or the encoder is not supported, "
-                "make sure you installed an older version ffmpeg<5)"
-            ) from exc
+        # Load the AAC audio back into a tensor
+        mp3_tensor, _ = torchaudio.load(output_path)
 
     original_length_flat = batch_size * channels * original_length
     compressed_length_flat = mp3_tensor.shape[-1]
@@ -194,7 +148,7 @@ def get_aac(
         input_path, output_path = f_in.name, f_out.name
 
         # Save the tensor as a WAV file
-        torchaudio.save(input_path, wav_tensor_flat, sr, backend="ffmpeg")
+        torchaudio.save(input_path, wav_tensor_flat, sr)
 
         # Prepare FFmpeg command for AAC conversion
         ffmpeg = "ffmpeg" if ffmpeg4codecs is None else ffmpeg4codecs 
@@ -214,18 +168,11 @@ def get_aac(
             command += ["-cutoff", str(lowpass_freq)]
         command.append(output_path)
 
-        try:
-            # Run FFmpeg and suppress output
-            subprocess.run(command, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+        # Run FFmpeg and suppress output
+        subprocess.run(command, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
 
-            # Load the AAC audio back into a tensor
-            aac_tensor, _ = torchaudio.load(output_path, backend="ffmpeg")
-        except Exception as exc:
-            raise RuntimeError(
-                f"Failed to run command {' '.join(command)}"
-                "(Often this means ffmpeg is not installed or the encoder is not supported, "
-                "make sure you installed an older version ffmpeg<5)"
-            ) from exc
+        # Load the AAC audio back into a tensor
+        aac_tensor, _ = torchaudio.load(output_path)
 
     original_length_flat = batch_size * channels * original_length
     compressed_length_flat = aac_tensor.shape[-1]
@@ -309,7 +256,7 @@ def get_vorbis(
         input_path, output_path = f_in.name, f_out.name
 
         # Save the tensor as a WAV file
-        torchaudio.save(input_path, wav_tensor_flat, sr, backend="ffmpeg")
+        torchaudio.save(input_path, wav_tensor_flat, sr)
 
         # Prepare FFmpeg command for AAC conversion
         ffmpeg = "ffmpeg" if ffmpeg4codecs is None else ffmpeg4codecs
@@ -329,18 +276,11 @@ def get_vorbis(
             command += ["-cutoff", str(lowpass_freq)]
         command.append(output_path)
 
-        try:
-            # Run FFmpeg and suppress output
-            subprocess.run(command, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+        # Run FFmpeg and suppress output
+        subprocess.run(command, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
 
-            # Load the AAC audio back into a tensor
-            vorbis_tensor, _ = torchaudio.load(output_path, backend="ffmpeg")
-        except Exception as exc:
-            raise RuntimeError(
-                f"Failed to run command {' '.join(command)}"
-                "(Often this means ffmpeg is not installed or the encoder is not supported, "
-                "make sure you installed an older version ffmpeg<5)"
-            ) from exc
+        # Load the AAC audio back into a tensor
+        vorbis_tensor, _ = torchaudio.load(output_path)
 
     original_length_flat = batch_size * channels * original_length
     compressed_length_flat = vorbis_tensor.shape[-1]

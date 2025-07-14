@@ -1,5 +1,6 @@
 import os
 from omegaconf import DictConfig
+from loguru import logger
 import pandas as pd
 import torch
 from torch import nn
@@ -73,8 +74,16 @@ class AudioAttack(nn.Module):
         self.single_attack = single_attack
         self.device = device
         self.ffmpeg4codecs = ffmpeg4codecs
-        if self.ffmpeg4codecs is None and not os.path.exists(self.ffmpeg4codecs):
-            raise FileNotFoundError(f"ffmpeg binary not found at {self.ffmpeg4codecs}.")
+
+        if self.ffmpeg4codecs is None:
+            logger.warning(
+                "ffmpeg4codecs is not provided. "
+                "Codec attacks may not work properly if your default ffmpeg "
+                "does not support all of them."
+            )
+        else:
+            if not os.path.exists(self.ffmpeg4codecs):
+                raise FileNotFoundError(f"ffmpeg binary not found at {self.ffmpeg4codecs}.")
 
         # Initialize the mixing file for training
         if self.mode == 'train':

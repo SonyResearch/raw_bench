@@ -56,8 +56,8 @@ class SolverTimbre(Solver):
                                self.msg_len, 
                                self.win_len,
                                self.embedding_dim, 
-                               nlayers_encoder=self.config.model.layer.nlayers_decoder, 
-                               attention_heads=self.config.model.layer.attention_heads_decoder).to(self.device)
+                               nlayers_encoder=self.config.model.layer.nlayers_encoder, 
+                               attention_heads=self.config.model.layer.attention_heads_encoder).to(self.device)
 
         self.decoder = Decoder(self.config.process,
                                self.config.model, 
@@ -118,7 +118,7 @@ class SolverTimbre(Solver):
             csv_suffix = '_' + self.config.test_suffix 
 
         self.eval_mode()
-        logger.info("start testing...")
+        logger.info("Start evaluation.")
    
         if self.audio_attack is not None:
             self.audio_attack.set_mode('test')

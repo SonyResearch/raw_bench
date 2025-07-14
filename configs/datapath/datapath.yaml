@@ -1,5 +1,5 @@
 AIR: null
-DEMAND: /data_woosung/DEMAND
+DEMAND: null
 Clotho: null
 DAPS: null
 MoisesDB: null
@@ -7,7 +7,7 @@ jaCapella: null
 GuitarSet: null
 MAESTRO: null
 PCD: null
-Bach10: /data_woosung/watermarking_test/Bach10
+Bach10: null
 Freischuetz: null
 
 # training

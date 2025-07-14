@@ -90,7 +90,7 @@ class SolverWavMark(Solver):
         if self.config.test_suffix is not None:
             csv_suffix = '_' + self.config.test_suffix 
         self.eval_mode()
-        logger.info("start testing...")
+        logger.info("Start evaluation.")
 
         res_list = []
         column_names = ['audio_filepath', 

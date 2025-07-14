@@ -362,7 +362,8 @@ class SolverSilentCipher(Solver):
         with torch.inference_mode():
             num_items = 0
             data = self.test_loader
-            logger.info(f"Start testing... ({len(data)} samples)")
+            logger.info("Start evaluation.")
+
             for ret in qqdm(data):
                 audio_chunks, audio_filepaths, datasets, att_types, attack_params, chunk_indices, start_times = ret
                 audio_chunks *= torch.sqrt(AVERAGE_ENERGY_VCTK / torch.mean(audio_chunks**2))

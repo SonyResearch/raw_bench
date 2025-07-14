@@ -71,7 +71,7 @@ class SolverAudioSeal(Solver):
         if self.config.test_suffix is not None:
             csv_suffix = '_' + self.config.test_suffix 
         self.eval_mode()
-        logger.info("start testing...")
+        logger.info("Start evaluation.")
         
         if self.audio_attack is not None:
             self.audio_attack.set_mode('test')
