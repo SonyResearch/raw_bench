@@ -1,0 +1,9 @@
+[submodule "wm_ckpts/silent_cipher"]
+	path = wm_ckpts/silent_cipher
+	url = https://huggingface.co/Sony/SilentCipher
+[submodule "wm_ckpts/audioseal"]
+	path = wm_ckpts/audioseal
+	url = https://huggingface.co/facebook/audioseal
+[submodule "wm_ckpts/wavmark"]
+	path = wm_ckpts/wavmark
+	url = https://huggingface.co/M4869/WavMark

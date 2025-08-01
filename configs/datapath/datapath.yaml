@@ -1,0 +1,17 @@
+AIR: test_data/AIR
+DEMAND: test_data/DEMAND
+Clotho: test_data/Clotho
+DAPS: test_data/DAPS
+MoisesDB: test_data/MoisesDB
+jaCappella: test_data/jaCappella
+GuitarSet: test_data/GuitarSet
+MAESTRO: test_data/MAESTRO
+PCD: test_data/PCD
+Bach10: test_data/Bach10
+Freischuetz: test_data/Freischuetz
+
+
+# training
+Tency: null
+VCTK: null
+BBC_Sound_Effects: null

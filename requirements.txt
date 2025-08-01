@@ -1,0 +1,49 @@
+# Core ML framework
+torch==2.1.0
+torchaudio
+torchinfo
+torchinterp1d
+
+# Audio/modeling libraries
+git+https://github.com/facebookresearch/audiocraft@main#egg=audiocraft[wm]
+audiomentations
+descript-audio-codec
+encodec
+librosa==0.10.2
+pysoundfile
+grafx==0.6.0
+
+# WM libraries
+audioseal
+git+https://github.com/Woosung-sony/silentcipher
+wavmark
+
+# Data processing / numerical libraries
+numpy
+numba
+pandas
+scipy
+
+# Utilities & functional programming
+einops
+argbind
+qqdm
+hydra-core
+
+# Visualization / logging
+tensorboard
+tensorboardX
+loguru
+wandb
+
+# NLP / transformers
+transformers
+
+# Evaluation
+# pyvisqol => not working
+mel_cepstral_distance
+
+# timbre used it
+kornia
+
+py7zr
