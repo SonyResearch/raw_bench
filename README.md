@@ -15,17 +15,16 @@ We introduce the **Robust Audio Watermarking Benchmark (RAW-Bench)**, a benchmar
 ## Links
 
 - [Paper](https://ai.sony/publications/A-Comprehensive-Real-World-Assessment-of-Audio-Watermarking-Algorithms-Will-They-Survive-Neural-Codecs/)
-- [How to Prepare Datasets](docs/datasets.md)
-- [How to Reproduce](docs/reproduction.md)
-- [pip package: pip install raw-banch](https://pypi.org/project/raw-bench/)
+- [Documentation & Tutorials](docs/README.md)
+- [PyPI package: `pip install raw-bench`](https://pypi.org/project/raw-bench/)
 
 
 ## TODO
 
 - [x] Refactor core codebase
 - [x] Release benchmark evaluation code for reproduction
-- [x] Publish [pip package](https://pypi.org/project/raw-bench/)
-- [x] Add [documentation and tutorials](docs/README.md)
+- [x] Publish pip package
+- [x] Add documentation and tutorials
 - [ ] Add a guide for perceptual evaluation ([ViSQOL](https://github.com/google/visqol))
 
 ---
