@@ -5,7 +5,6 @@ torchinfo
 torchinterp1d
 
 # Audio/modeling libraries
-git+https://github.com/facebookresearch/audiocraft@main#egg=audiocraft[wm]
 audiomentations
 descript-audio-codec
 encodec
@@ -15,7 +14,6 @@ grafx==0.6.0
 
 # WM libraries
 audioseal
-git+https://github.com/Woosung-sony/silentcipher
 wavmark
 
 # Data processing / numerical libraries
@@ -46,4 +44,5 @@ mel_cepstral_distance
 # timbre used it
 kornia
 
+# download script
 py7zr

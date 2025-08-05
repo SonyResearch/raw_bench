@@ -40,7 +40,6 @@ dependencies = [
     "mel_cepstral_distance",
     "kornia",
     "torchlpc",
-    # GitHub dependencies (PEP 508)
     "wavmark"
 ]
 
