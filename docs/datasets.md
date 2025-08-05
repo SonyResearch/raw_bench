@@ -13,33 +13,199 @@ To evaluate watermarking algorithms across diverse audio domains, we curated a c
 
 Our test dataset is constructed from the following sources:
 
-- **Bach10** ([GitHub](https://github.com/flippy-fyp/Bach10_v1.1))  
-  Mixdowns of ten classical ensemble recordings of J.S. Bach pieces. We use only the stereo mix files.
 
-- **Clotho** ([Zenodo](https://zenodo.org/records/3490684))  
-  A diverse collection of short environmental sound clips. To ensure compatibility with file loaders, **we removed all whitespaces from filenames** during preprocessing.
+### [Bach10](https://github.com/flippy-fyp/Bach10_v1.1)
 
-- **DAPS (Device and Produced Speech)** ([Zenodo](https://zenodo.org/records/4660670))  
-  A dataset of speech recorded in both studio and real-world device conditions. We include both high-quality reference tracks and corresponding device-recorded versions.
+Mixdowns of ten classical ensemble recordings of J.S. Bach pieces. We use only the stereo mix files.
 
-- **FreiSchuetz** ([AudioLabs](https://www.audiolabs-erlangen.de/resources/MIR/FreiDi/MultitrackDataset))  
-  Multitrack and stereo recordings of three full-length opera performances, including professional mixes and raw microphone recordings. We use both the stereo mixes and selected multitrack stems.
+#### [License](https://github.com/flippy-fyp/Bach10_v1.1?tab=readme-ov-file#citing)
 
-- **GuitarSet** ([Zenodo](https://zenodo.org/records/3371780))  
-  A collection of solo guitar recordings with detailed annotations of pitch, fretboard position, and playing technique. We use the mixdown audio tracks and ignore annotation files.
+If you use the dataset in a work of your own that you wish to publish, please cite:
 
-- **jaCappella** ([Hugging Face](https://huggingface.co/datasets/jaCappella/jaCappella))  
-  A corpus of 50 Japanese a cappella vocal ensemble recordings. We use the stereo mixdowns and include all available isolated vocal tracks.
+```bibtex
+@article{DuanP11_SoundPrism_JSTSP,
+  author    = {Zhiyao Duan and Bryan Pardo},
+  title     = {Soundprism: An Online System for Score-Informed Source Separation of Music Audio},
+  journal   = {{IEEE} Journal of Selected Topics in Signal Process.},
+  year      = {2011},
+  volume    = {5},
+  number    = {6},
+  pages     = {1205--1215}
+}
+```
 
-- **MAESTRO (v3.0.0)** ([Magenta](https://magenta.tensorflow.org/datasets/maestro#v300))  
-  A dataset of paired audio and MIDI recordings from the International Piano-e-Competition. We use a **subset of the audio tracks** from MAESTRO-v3 for solo piano performance evaluation.
+### [Clotho](https://zenodo.org/records/3490684)
 
-- **MoisesDB** ([Moises Research](https://music.ai/research/#datasets))  
-  A multitrack dataset containing 240 musical tracks across 12 genres, performed by 45 artists. **We use only the stereo mixdowns**.  
-  > 🔐 This dataset requires manual access approval. You must **submit a request to Moises** via their official website to obtain the data.
+A diverse collection of short environmental sound clips. To ensure compatibility with file loaders, **we removed all whitespaces from filenames** during preprocessing.
 
-- **Piano Concerto Dataset (PCD)** ([AudioLabs](https://www.audiolabs-erlangen.de/resources/MIR/PCD/))  
-  A dataset of stereo recordings from piano concertos. We use only a subset of the **raw solo piano tracks** (left-hand channel), without orchestra accompaniment.
+#### [License](https://zenodo.org/records/3490684)
+> under the corresponding licences (mostly CreativeCommons with attribution) of Freesound [1] platform, mentioned explicitly in the CSV files for each of the audio files. That is, each audio file in the 7z archives is listed in the CSV files with the meta-data. 
+
+#### Reference
+
+If you use Clotho, please cite our paper.
+
+```bibtex
+@inproceedings{DrossosLV20_Clotho_ICASSP,
+  author    = {Konstantinos Drossos and Samuel Lipping and Tuomas Virtanen},
+  title     = {{C}lotho: {A}n Audio Captioning Dataset}, 
+  booktitle = {Proc. of the {IEEE} Int. Conf. on Acoust., Speech, and Signal Process. ({ICASSP})},
+  year      = {2020},
+  pages     = {736--740},
+  doi       = {10.1109/ICASSP40776.2020.9052990}
+}
+```
+
+### [DAPS](https://zenodo.org/records/4660670) (Device and Produced Speech)  
+
+A dataset of speech recorded in both studio and real-world device conditions. We include both high-quality reference tracks and corresponding device-recorded versions.
+
+#### [License]((https://zenodo.org/records/4660670))
+
+Creative Commons Attribution Non Commercial 4.0 International
+
+### Reference
+
+```bibtex
+@article{Mysore15_DAPS_SPS,
+  author    = {Gautham J. Mysore},
+  title     = {Can we Automatically Transform Speech Recorded on Common Consumer Devices in Real-World Environments into Professional Production Quality Speech? -- {A} Dataset, Insights, and Challenges}, 
+  journal   = {{IEEE} Signal Process. Lett.}, 
+  year      = {2015},
+  volume    = {22},
+  number    = {8},
+  pages     = {1006--1010},
+  doi       = {10.1109/LSP.2014.2379648},
+}
+```
+
+### [FreiSchuetz](https://www.audiolabs-erlangen.de/resources/MIR/FreiDi/MultitrackDataset)
+
+Multitrack and stereo recordings of three full-length opera performances, including professional mixes and raw microphone recordings. We use both the stereo mixes and selected multitrack stems.
+
+#### [Lisence](https://www.audiolabs-erlangen.de/resources/MIR/FreiDi/MultitrackDataset)
+
+This work is licensed under a Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License.
+
+#### Reference
+
+```bibtex
+@inproceedings{PraetzlichMBV15_FreiDi_ISMIR-LBD,
+  author    = {Thomas Pr{\"a}tzlich and Meinard M{\"u}ller and Benjamin W. Bohl and Joachim Veit},
+  title     = {{F}reisch{\"u}tz {D}igital: Demos of audio-related contributions},
+  booktitle = {Demos and Late Breaking News of the Int. Soc. for Music Inf. Retriev. Conf. ({ISMIR})},
+  address   = {M{\'a}laga, Spain},
+  year      = {2015},
+}
+```
+
+### [GuitarSet](https://zenodo.org/records/3371780)
+
+A collection of solo guitar recordings with detailed annotations of pitch, fretboard position, and playing technique. We use the mixdown audio tracks and ignore annotation files.
+
+#### [License](https://zenodo.org/records/3371780)
+
+Creative Commons Attribution 4.0 International
+
+#### Reference
+
+If you make use of GuitarSet for academic purposes, please cite the following publication:
+
+```bibtex
+@inproceedings{XiEtAl18_GuitarSet_ISMIR,
+  title     = {GuitarSet: A Dataset for Guitar Transcription.},
+  author    = {Qingyang Xi and Rachel Bittner and Johan Pauwels and Xuzhou Ye and Juan Pablo Bello},
+  booktitle = {Proc. of the Int. Soc. for Music Inf. Retriev. Conf. ({ISMIR})},
+  address   = {Paris, France},
+  pages     = {453--460},
+  year      = {2018}
+}
+```
+
+### [jaCappella](https://huggingface.co/datasets/jaCappella/jaCappella)
+
+A corpus of 50 Japanese a cappella vocal ensemble recordings. We use the stereo mixdowns and include all available isolated vocal tracks.
+
+#### [License](https://tomohikonakamura.github.io/jaCappella_corpus/)
+
+Please refer to [this](https://tomohikonakamura.github.io/jaCappella_corpus/)
+
+#### Reference
+
+```bibtex
+@inproceedings{NakamuraEtAl23_jaCapella_ICASSP,
+  author    = {Tomohiko Nakamura and Shinnosuke Takamichi and Naoko Tanji and Satoru Fukayama and Hiroshi Saruwatari},
+  title     = {ja{C}appella corpus: A {J}apanese a cappella vocal ensemble corpus},
+  booktitle = {Proc. of the {IEEE} Int. Conf. on Acoust., Speech, and Signal Process. ({ICASSP})},
+  year      = {2023},
+  doi       = {10.1109/ICASSP49357.2023.10095569},
+}
+```
+
+### [MAESTRO](https://magenta.tensorflow.org/datasets/maestro#v300) (v3.0.0)
+
+A dataset of paired audio and MIDI recordings from the International Piano-e-Competition. We use a **subset of the audio tracks** from MAESTRO-v3 for solo piano performance evaluation.
+
+#### [License](https://magenta.tensorflow.org/datasets/maestro#license)
+
+The dataset is made available by Google LLC under a Creative Commons Attribution Non-Commercial Share-Alike 4.0 (CC BY-NC-SA 4.0) license.
+
+#### Reference
+
+```bibtex
+@inproceedings{
+  hawthorne2018enabling,
+  title={Enabling Factorized Piano Music Modeling and Generation with the {MAESTRO} Dataset},
+  author={Curtis Hawthorne and Andriy Stasyuk and Adam Roberts and Ian Simon and Cheng-Zhi Anna Huang and Sander Dieleman and Erich Elsen and Jesse Engel and Douglas Eck},
+  booktitle={International Conference on Learning Representations},
+  year={2019},
+  url={https://openreview.net/forum?id=r1lYRjC9F7},
+}
+```
+
+### [MoisesDB](https://music.ai/research/#datasets)  
+
+A multitrack dataset containing 240 musical tracks across 12 genres, performed by 45 artists. **We use only the stereo mixdowns**.  
+
+  > This dataset requires manual access approval. You must **submit a request to Moises** via their official website to obtain the data.
+
+#### [License](https://github.com/moises-ai/moises-db/blob/main/LICENSE)
+
+MoisesDB is distributed under the Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License (CC BY-NC-SA 4.0).
+
+#### Reference
+
+```bibtex
+@misc{pereira2023moisesdb,
+      title={Moisesdb: A dataset for source separation beyond 4-stems}, 
+      author={Igor Pereira and Felipe Araújo and Filip Korzeniowski and Richard Vogl},
+      year={2023},
+      eprint={2307.15913},
+      archivePrefix={arXiv},
+      primaryClass={cs.SD}
+}
+```
+
+### Piano Concerto Dataset ([PCD](https://www.audiolabs-erlangen.de/resources/MIR/PCD/))  
+
+A dataset of stereo recordings from piano concertos. We use only a subset of the **raw solo piano tracks** (left-hand channel), without orchestra accompaniment.
+
+#### License
+
+#### Reference
+
+```bibtex
+@article{OezerSALSM23_PCD_TISMIR,
+  title     = {{P}iano {C}oncerto {D}ataset {(PCD)}: A Multitrack Dataset of Piano Concertos},
+  author    = {Yigitcan {\"O}zer and Simon Schw{\"a}r and Vlora Arifi-M{\"u}ller and Jeremy Lawrence and Emre Sen and Meinard M{\"u}ller},
+  journal   = {Trans. of the Int. Soc. for Music Inf. Retriev. ({TISMIR})},
+  volume    = {6},
+  number    = {1},
+  year      = {2023},
+  pages     = {75--88},
+  doi       = {10.5334/tismir.160},
+}
+```
 
 ## Access and Download
 
