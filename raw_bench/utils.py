@@ -1,5 +1,6 @@
 from collections import defaultdict
 import hashlib
+from loguru import logger
 import numpy as np
 from omegaconf import DictConfig, ListConfig
 import pandas as pd
@@ -128,10 +129,10 @@ def split_test_chunks(
         duration = row['duration']
         start = row['start']
         
-        #if duration // chunk_duration != duration / chunk_duration:
-        #    raise ValueError(f'Audio duration is not a multiple of {chunk_duration}')
-
-        for idx, chunk_start in enumerate(np.arange(start, start+duration, chunk_duration)):
+        num_chunks = int(duration // chunk_duration) + (1 if duration % chunk_duration > 1e-5 else 0)
+         
+        for idx in range(num_chunks):
+            chunk_start = start + idx * chunk_duration
             data_splitted.append([row['dataset_name'],
                                 row['dataset_type'],
                                 row['detail'],
@@ -206,6 +207,10 @@ def snr(
 
 
 # copied from https://github.com/facebookresearch/audiocraft/blob/896ec7c47f5e5d1e5aa1e4b260c4405328bf009d/audiocraft/solvers/watermark.py#L697
+# Original code is licensed under the MIT License:
+# https://github.com/facebookresearch/audiocraft/blob/main/LICENSE
+# Copyright (c) Meta Platforms, Inc. and affiliates.
+
 def _bit_acc(
     decoded: torch.Tensor,
     original: torch.Tensor
@@ -226,6 +231,10 @@ def _bit_acc(
     return bit_acc
 
 # copied from https://github.com/facebookresearch/audiocraft/blob/896ec7c47f5e5d1e5aa1e4b260c4405328bf009d/audiocraft/solvers/watermark.py#L702
+# Original code is licensed under the MIT License:
+# https://github.com/facebookresearch/audiocraft/blob/main/LICENSE
+# Copyright (c) Meta Platforms, Inc. and affiliates.
+
 def compute_bit_acc(
     positive: torch.Tensor,
     original: torch.Tensor,

@@ -1,6 +1,7 @@
 import argparse
 import os
 
+import numpy as np
 import pandas as pd
 import torch
 import torchaudio
@@ -104,6 +105,14 @@ class AudioDataset(data.Dataset):
                 if orig_sr != self.sr:
                     audio_chunk = torchaudio.transforms.Resample(orig_freq=orig_sr, 
                                                                  new_freq=self.sr)(audio_chunk)
+
+                expected_len = int(self.config.eval_seg_duration * self.sr)
+                # if the actual content is shorter than num_samples, pad by repeating itself
+                if audio_chunk.shape[-1] < expected_len:
+                    # then duplicate this chunk to match the expected duration
+                    repeat_factor = int(np.ceil(expected_len / audio_chunk.shape[-1]))
+                    audio_chunk = audio_chunk.repeat(1, repeat_factor)[..., :expected_len]
+                    assert audio_chunk.shape[-1] == expected_len
 
                 self.cache[(path, start_idx, num_samples)] = audio_chunk
 

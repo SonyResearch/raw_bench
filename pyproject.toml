@@ -41,8 +41,6 @@ dependencies = [
     "kornia",
     "torchlpc",
     # GitHub dependencies (PEP 508)
-    "audiocraft @ git+https://github.com/facebookresearch/audiocraft@main#egg=audiocraft[wm]",
-    "silentcipher @ git+https://github.com/Woosung-sony/silentcipher",
     "wavmark"
 ]
 

@@ -12,9 +12,6 @@ from pathlib import Path
 from qqdm import qqdm
 from torchmetrics.audio.snr import ScaleInvariantSignalNoiseRatio
 
-
-from audiocraft.models.builders import get_watermark_model
-
 from .base import Solver
 from ..utils import compute_bit_acc
 
@@ -91,8 +88,8 @@ class SolverAudioSeal(Solver):
             for ret in qqdm(self.test_loader):
                 audio_chunks, audio_filepaths, datasets, att_types, attack_params, chunk_indices, start_times = ret
                 y = audio_chunks.to(self.device)
-                message = self.random_message(self.model.nbits, batch_size=y.shape[0]).to(self.device)
-                watermark = self.model.get_watermark(y, message)
+                message = self.random_message(self.nbits, batch_size=y.shape[0]).to(self.device)
+                watermark = self.model["generator"].get_watermark(y, message=message, sample_rate=self.sample_rate)
                 y_wm = y + watermark
                 
                 y_wm_dirty = torch.zeros_like(y_wm)
@@ -113,10 +110,10 @@ class SolverAudioSeal(Solver):
 
                     # now the each attack can handle device by itself
                     # we do not need this the line below          
-                    y_wm_decoded = self.model.detect_watermark(y_wm[b, ...].unsqueeze(0))
-                    y_wm_dirty_decoded = self.model.detect_watermark(y_wm_dirty[b, ...].unsqueeze(0))
-                    y_decoded = self.model.detect_watermark(y[b, ...].unsqueeze(0))
-                    y_dirty_decoded = self.model.detect_watermark(y_dirty[b, ...].unsqueeze(0))
+                    y_wm_decoded = self.detect_watermark(y_wm[b, ...].unsqueeze(0))
+                    y_wm_dirty_decoded = self.detect_watermark(y_wm_dirty[b, ...].unsqueeze(0))
+                    y_decoded = self.detect_watermark(y[b, ...].unsqueeze(0))
+                    y_dirty_decoded = self.detect_watermark(y_dirty[b, ...].unsqueeze(0))
 
                     cur_losses_log['bitwise/clean'] = compute_bit_acc(y_wm_decoded, message[b]).item()
                     cur_losses_log['bitwise/distorted'] = compute_bit_acc(y_wm_dirty_decoded, message[b]).item()
@@ -175,8 +172,60 @@ class SolverAudioSeal(Solver):
         """
         Instantiate the watermark model and optimizer as specified in the configuration.
         """
-        # Model and optimizer
-        self.model = get_watermark_model(self.config)
+        import audioseal
+        
+        # from https://github.com/facebookresearch/audiocraft/blob/896ec7c47f5e5d1e5aa1e4b260c4405328bf009d/audiocraft/models/builders.py#L56
+        seanet_kwargs  = OmegaConf.to_container(self.config["seanet"], resolve=True)
+        encoder_override_kwargs = seanet_kwargs.pop("encoder")
+        decoder_override_kwargs = seanet_kwargs.pop("decoder")
+        encoder_kwargs = {**seanet_kwargs, **encoder_override_kwargs}
+        decoder_kwargs = {**seanet_kwargs, **decoder_override_kwargs}
+        encoder = audioseal.libs.audiocraft.modules.seanet.SEANetEncoder(**encoder_kwargs)
+        decoder = audioseal.libs.audiocraft.modules.seanet.SEANetDecoder(**decoder_kwargs)
+
+        # Build message processor
+        audioseal_cfg = self.config.get("audioseal", None)
+        if audioseal_cfg is None:
+            audioseal_cfg = {}
+        else: 
+            audioseal_cfg = OmegaConf.to_container(audioseal_cfg, resolve=True)
+
+        nbits = audioseal_cfg.get("nbits", 0)
+        hidden_size = getattr(self.config.seanet, "dimension", 128)
+        msg_processor = audioseal.MsgProcessor(nbits, hidden_size=hidden_size)
+
+        # Build detector using audioseal API
+        def _get_audioseal_detector():
+            # We don't need encoder and decoder params from seanet, remove them
+            seanet_cfg = OmegaConf.to_container(self.config.seanet, resolve=True)
+            seanet_cfg.pop("encoder")
+            seanet_cfg.pop("decoder")
+            detector_cfg = OmegaConf.to_container(self.config.detector, resolve=True)
+
+            typed_seanet_cfg = audioseal.builder.SEANetConfig(**seanet_cfg)
+            typed_detector_cfg = audioseal.builder.DetectorConfig(**detector_cfg)
+            _cfg = audioseal.builder.AudioSealDetectorConfig(
+                nbits=nbits, seanet=typed_seanet_cfg, detector=typed_detector_cfg
+            )
+            return audioseal.builder.create_detector(_cfg)
+
+        detector = _get_audioseal_detector()
+        generator = audioseal.AudioSealWM(
+            encoder=encoder, decoder=decoder, msg_processor=msg_processor
+        )
+        
+        # https://github.com/facebookresearch/audiocraft/blob/896ec7c47f5e5d1e5aa1e4b260c4405328bf009d/audiocraft/models/watermark.py#L61C1-L65C76
+        self.model = torch.nn.ModuleDict({
+            "generator": generator,
+            "detector": detector
+        })
+
+        # Allow to re-train an n-bit model with new 0-bit message
+        self.nbits = nbits if nbits else self.model["generator"].msg_processor.nbits
+        
+        device = torch.device(getattr(self.config, "device", "cpu"))
+        dtype = getattr(torch, getattr(self.config, "dtype", "float32"))
+        self.model.to(device=device, dtype=dtype)
 
     def load_models(
         self, 
@@ -193,8 +242,8 @@ class SolverAudioSeal(Solver):
             gen_ckpt = gen_ckpt['model']
         if 'model' in det_ckpt:
             det_ckpt = det_ckpt['model']                
-        self.model.generator.load_state_dict(gen_ckpt)
-        self.model.detector.load_state_dict(det_ckpt)
+        self.model["generator"].load_state_dict(gen_ckpt)
+        self.model["detector"].load_state_dict(det_ckpt)
 
     def eval_mode(self):
         """
@@ -203,7 +252,29 @@ class SolverAudioSeal(Solver):
         self.model.eval()
         super(SolverAudioSeal, self).eval_mode()
 
+    # wrapping https://github.com/facebookresearch/audiocraft/blob/896ec7c47f5e5d1e5aa1e4b260c4405328bf009d/audiocraft/models/watermark.py#L67
+    def detect_watermark(self, x: torch.Tensor) -> torch.Tensor:
+        """
+        Detect the watermarks from the audio signal.  The first two units of the output
+        are used for detection, the rest is used to decode the message. If the audio is
+        not watermarked, the message will be random.
+
+        Args:
+            x: Audio signal, size batch x frames
+        Returns
+            torch.Tensor: Detection + decoding results of shape (B, 2+nbits, T).
+        """
+
+        # Getting the direct decoded message from the detector
+        result = self.model["detector"].detector(x)  # b x 2+nbits
+        # hardcode softmax on 2 first units used for detection
+        result[:, :2, :] = torch.softmax(result[:, :2, :], dim=1)
+        return result
+    
     # copied from https://github.com/facebookresearch/audiocraft/blob/896ec7c47f5e5d1e5aa1e4b260c4405328bf009d/audiocraft/solvers/watermark.py#L654
+    # Original code is licensed under the MIT License:
+    # https://github.com/facebookresearch/audiocraft/blob/main/LICENSE
+    # Copyright (c) Meta Platforms, Inc. and affiliates.
     def evaluate_audio_watermark(
         self,
         y_pred: torch.Tensor,
@@ -219,6 +290,9 @@ class SolverAudioSeal(Solver):
         return metrics
 
     # copied from https://github.com/facebookresearch/audiocraft/blob/896ec7c47f5e5d1e5aa1e4b260c4405328bf009d/audiocraft/solvers/watermark.py#L69
+    # Original code is licensed under the MIT License:
+    # https://github.com/facebookresearch/audiocraft/blob/main/LICENSE
+    # Copyright (c) Meta Platforms, Inc. and affiliates.
     @staticmethod
     def random_message(nbits: int,
                        batch_size: int) -> torch.Tensor:
