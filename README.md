@@ -12,25 +12,25 @@ _To appear at Interspeech 2025, Rotterdam, The Netherlands_
 We introduce the **Robust Audio Watermarking Benchmark (RAW-Bench)**, a benchmark for evaluating deep learning-based audio watermarking methods with standardized and systematic comparisons. To simulate real-world usage, we introduce a comprehensive audio attack pipeline with various distortions such as compression, background noise, and reverberation, along with a diverse test dataset including speech, environmental sounds, and music recordings. Evaluating four existing watermarking methods on RAW-Bench reveals two main insights: (i) neural compression techniques pose the most significant challenge, even when algorithms are trained with such compressions; and (ii) training with audio attacks generally improves robustness, although it is insufficient in some cases. Furthermore, we find that specific distortions, such as polarity inversion, time stretching, or reverb, seriously affect certain methods.
 
 
-## 🔗 Links
+## Links
 
-- [Paper on arXiv](https://arxiv.org/abs/2505.19663)
+- [Paper](https://ai.sony/publications/A-Comprehensive-Real-World-Assessment-of-Audio-Watermarking-Algorithms-Will-They-Survive-Neural-Codecs/)
 - [How to Prepare Datasets](docs/datasets.md)
 - [How to Reproduce](docs/reproduction.md)
-- pip Package (Coming Soon)
+- [pip package: pip install raw-banch](https://pypi.org/project/raw-bench/)
 
 
 ## TODO
 
 - [x] Refactor core codebase
 - [x] Release benchmark evaluation code for reproduction
-- [ ] Release fine-tuning & training pipeline (AudioSeal & SilentCipher + attack pipeline) 
-- [ ] Publish pip package
-- [ ] Add documentation and tutorials 
+- [x] Publish [pip package](https://pypi.org/project/raw-bench/)
+- [x] Add [documentation and tutorials](docs)
+- [ ] Add a guide for perceptual evaluation ([ViSQOL](https://github.com/google/visqol))
 
 ---
 
-## 📖 Citation
+## Citation
 
 If you find RAW-Bench useful in your research, please cite our paper:
 
