@@ -25,7 +25,7 @@ We introduce the **Robust Audio Watermarking Benchmark (RAW-Bench)**, a benchmar
 - [x] Refactor core codebase
 - [x] Release benchmark evaluation code for reproduction
 - [x] Publish [pip package](https://pypi.org/project/raw-bench/)
-- [x] Add [documentation and tutorials](docs)
+- [x] Add [documentation and tutorials](docs/README.md)
 - [ ] Add a guide for perceptual evaluation ([ViSQOL](https://github.com/google/visqol))
 
 ---

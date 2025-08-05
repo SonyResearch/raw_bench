@@ -10,6 +10,12 @@ Follow the steps below for a smooth setup and evaluation experience.
 First, clone the repository and install all dependencies:
 
 ```bash
+pip install raw-bench
+```
+
+or
+
+```bash
 git clone https://github.com/SonyResearch/raw_bench.git
 cd raw_bench
 pip install .
