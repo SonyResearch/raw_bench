@@ -12,7 +12,7 @@ import torch
 from loguru import logger
 from omegaconf import DictConfig, OmegaConf
 from qqdm import qqdm
-from silentcipher.model import CarrierDecoder, Encoder, MsgDecoder
+from ..model.silentcipher import CarrierDecoder, Encoder, MsgDecoder
 from torchmetrics.audio.snr import ScaleInvariantSignalNoiseRatio
 
 from .base import Solver

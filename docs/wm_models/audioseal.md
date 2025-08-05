@@ -9,7 +9,7 @@
 
 ## Setup (using `raw_bench`)
 
-In `raw_bench`, we used the [audiocraft repository](https://github.com/facebookresearch/audiocraft). As its readme suggested, you need to install it with `wm` option (`git+https://github.com/facebookresearch/audiocraft@main#egg=audiocraft[wm]`). If you already install `raw_bench` then you don't have to install it by yourself.
+In `raw_bench`, we used [audioseal](https://github.com/facebookresearch/audioseal/branches) and [audiocraft](https://github.com/facebookresearch/audiocraft) repositories. If you already install `raw_bench` then you don't have to install it by yourself.
 
 ---
 
