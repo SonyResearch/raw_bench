@@ -106,7 +106,7 @@ class DACWrapper(NeuralCodecWrapper):
         # see https://github.com/descriptinc/descript-audio-codec
         type_to_sr = {'44khz': 44100, '24khz': 24000, '16khz': 16000}
         self.codec_sr = type_to_sr[codec_type]
-        assert self.model_sr == self.codec_sr, f"currently model_sr({self.model_sr}) must be the same as codec_sr({self.codec_sr})" 
+        self.requires_resampling = (self.model_sr != self.codec_sr)
 
         # Download and load the pretrained model
         model_path = download(model_type=codec_type)
@@ -239,7 +239,24 @@ class DACWrapper(NeuralCodecWrapper):
             length = x.shape[-1]
             assert n_codebook in self.supported_n_codebooks, f'n_codebook({n_codebook}) must be in self.supported_n_codebooks({self.supported_n_codebooks})'        
             assert x.shape[1] == 1, 'DAC only supporst monaural audio input'
-            return self.model(x, n_quantizers=n_codebook)['audio'][..., :length]
+
+            if self.requires_resampling:
+                signal = AudioSignal(x, self.model_sr)
+                signal.resample(self.codec_sr)
+                x = signal.audio_data
+
+            x = self.model(x, n_quantizers=n_codebook)['audio']
+
+            if self.requires_resampling:
+                signal = AudioSignal(x, self.codec_sr)
+                signal.resample(self.model_sr)
+                x = signal.audio_data
+
+            # pad if required
+            num_padding = length - x.shape[-1]
+            if num_padding > 0:
+                return torch.cat([x, torch.zeros_like(x[..., :num_padding])], dim=-1)
+            return x[..., :length]
 
 
 class EncodecWrapper(NeuralCodecWrapper):

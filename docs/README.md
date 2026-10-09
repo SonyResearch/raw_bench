@@ -15,6 +15,9 @@ This directory contains documentation for the `raw-bench` project. Below is a su
 - **[wandb.md](./wandb.md)**  
   Instructions for enabling and using Weights & Biases (wandb) for experiment tracking and logging (this is optional).
 
+- **[2026-09-29-errata.md](./2026-09-29-errata.md)**  
+  Known issues affecting the numbers reported in the paper (DAC resampling, MP3 bitrate), with corrected values.
+
 - **[reproduction.md](./reproduction.md)**  
   Step-by-step guide to reproduce the experiments reported in our paper using the `raw-bench` framework.
 
