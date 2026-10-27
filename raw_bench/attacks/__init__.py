@@ -145,6 +145,7 @@ class AudioAttack(nn.Module):
         )
         self.dac = DACWrapper(
             codec_type=self.config.dac.type,
+            model_sr=self.sr,
             device=self.device
         )
 
