@@ -24,6 +24,7 @@ We introduce the **Robust Audio Watermarking Benchmark (RAW-Bench)**, a benchmar
 - [Paper](https://ai.sony/publications/A-Comprehensive-Real-World-Assessment-of-Audio-Watermarking-Algorithms-Will-They-Survive-Neural-Codecs/)
 - [Documentation & Tutorials](docs/README.md)
 - [PyPI package: `pip install raw-bench`](https://pypi.org/project/raw-bench/)
+- ⚠️ The PyPI release (0.1.0) does not include the DAC fix yet; see [docs/2026-09-29-errata.md](docs/2026-09-29-errata.md). Install from source for the corrected DAC attack.
 
 
 ## TODO
